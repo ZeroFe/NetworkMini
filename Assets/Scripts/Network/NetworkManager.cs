@@ -20,8 +20,6 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     [SerializeField] private GameObject lobbyPanel;
     [Header("Room")]
     [SerializeField] private GameObject roomPanel;
-    [SerializeField] private TMP_InputField chatInput;
-    [SerializeField] private TextMeshProUGUI roomInfoText;
 
     [Header("Debug")]
     [SerializeField] private TextMeshProUGUI connectStateText;
@@ -81,13 +79,6 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         connectStateText.text = "In Room";
     }
 
-    public void SetRoomInfo()
-    {
-        roomInfoText.text = PhotonNetwork.CurrentRoom.Name + "/" +
-                            PhotonNetwork.CurrentRoom.PlayerCount +
-                            " / " + PhotonNetwork.CurrentRoom.MaxPlayers;
-    }
-
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
         photonView.RPC(nameof(ChatRPC), RpcTarget.All,
@@ -106,10 +97,9 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
     }
 
-    public void SendChatMessage()
+    public void SendChatMessage(string message)
     {
-        photonView.RPC(nameof(ChatRPC), RpcTarget.All, PhotonNetwork.NickName + ":" + chatInput.text);
-        chatInput.text = "";
+        photonView.RPC(nameof(ChatRPC), RpcTarget.All, message);
     }
 
     [PunRPC]

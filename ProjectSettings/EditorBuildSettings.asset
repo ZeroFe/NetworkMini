@@ -5,7 +5,13 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
-    path: 
-    guid: 00000000000000000000000000000000
+  - enabled: 1
+    path: Assets/Scenes/Lobby.unity
+    guid: efc4d8993bd091b4cb0134fd9df09dd1
+  - enabled: 1
+    path: Assets/Scenes/ChatTest.unity
+    guid: 88b0b67cb365f4c4494d4fb7215f4460
+  - enabled: 1
+    path: Assets/Scenes/Aqua_Shooting.unity
+    guid: 91cc11e7ed615e44f8690975410ef0ab
   m_configObjects: {}
