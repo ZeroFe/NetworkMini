@@ -1,16 +1,32 @@
 using System.Collections;
 using System.Collections.Generic;
+using Photon.Pun;
+using TMPro;
 using UnityEngine;
 
 public class LobbyGUI : MonoBehaviour
 {
-    public NetworkManager networkManager;
+    [Header("Create Room")]
+    public GameObject createRoomPopup;
+
+    [Header("User Info")] 
+    public TextMeshProUGUI userNameText;
+
+    private NetworkManager networkManager;
 
     void Start()
     {
         networkManager = FindObjectOfType<NetworkManager>();
 
+        // Ã³À½¿¡ ÆË¾÷ ´ÝÇô ÀÖÀ½
+        createRoomPopup.SetActive(false);
 
+        UpdateUserInfo();
+    }
+
+    private void UpdateUserInfo()
+    {
+        userNameText.text = PhotonNetwork.LocalPlayer.NickName;
     }
 
     void Update()

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa03b0f4937add54581899557b950fea, type: 3}
   m_Name: Typing
   m_EditorClassIdentifier: 
-  gameScene: {fileID: 102900000, guid: 88b0b67cb365f4c4494d4fb7215f4460, type: 3}
+  gameScene: {fileID: 102900000, guid: cd35b0704494604498646e8336300a85, type: 3}
   gameScreenShot: {fileID: 21300000, guid: 56bbc6b42271d4177ac313247f47ac1f, type: 3}
   gameName: "\uC11C\uBC14\uC774\uBC8C \uC62C\uB77C\uD0C0\uC790"
   gameExplain: "\uB0A8\uB4E4\uBCF4\uB2E4 \uBE60\uB974\uACE0 \uC815\uD655\uD558\uAC8C

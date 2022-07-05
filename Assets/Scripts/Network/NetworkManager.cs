@@ -12,14 +12,17 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 {
     public static NetworkManager Instance { get; private set; }
 
+    public event Action<Player> onPlayerEnteredRoom;
+    public event Action<Player> onPlayerLeftRoom;
+
     public string UserName { get; set; }
 
     [Header("Login")] 
-    [SerializeField] private GameObject loginPanel;
+    [SerializeField] private LoginGUI loginUI;
     [Header("Lobby")]
-    [SerializeField] private GameObject lobbyPanel;
+    [SerializeField] private LobbyGUI lobbyUI;
     [Header("Room")]
-    [SerializeField] private GameObject roomPanel;
+    [SerializeField] private RoomGUI roomUI;
 
     [Header("Debug")]
     [SerializeField] private TextMeshProUGUI connectStateText;
@@ -31,13 +34,49 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject);
         }
     }
 
     private void Start()
     {
-        connectStateText.text = "Disconnected";
+        PhotonNetwork.GameVersion = "0.1";
+        // 네트워크 객체들끼리 씬 자동 동기화
+        PhotonNetwork.AutomaticallySyncScene = true;
+
+        if (PhotonNetwork.InRoom)
+        {
+            print("Room State");
+            ActiveNetworkStateUI();
+        }
+        else if (PhotonNetwork.InLobby)
+        {
+            print("Lobby State");
+            ActiveNetworkStateUI();
+        }
+        else
+        {
+            print("Login State");
+            ActiveNetworkStateUI();
+        }
+
+        // 상태 체크
+        StartCoroutine(UpdateNetworkState());
+    }
+
+    private void ActiveNetworkStateUI()
+    {
+        roomUI.gameObject.SetActive(PhotonNetwork.InRoom);
+        lobbyUI.gameObject.SetActive(PhotonNetwork.InLobby);
+        loginUI.gameObject.SetActive(!PhotonNetwork.InLobby && !PhotonNetwork.InRoom);
+    }
+
+    IEnumerator UpdateNetworkState()
+    {
+        while (true)
+        {
+            connectStateText.text = PhotonNetwork.NetworkClientState.ToString();
+            yield return new WaitForSeconds(0.1f);
+        }
     }
 
     public void Connect()
@@ -56,8 +95,8 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
     public override void OnJoinedLobby()
     {
-        lobbyPanel.SetActive(true);
-        connectStateText.text = "Joined Lobby";
+        print("Joined Lobby");
+        ActiveNetworkStateUI();
     }
 
     public void CreateRoom()
@@ -65,7 +104,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         //roomInput.text = string.IsNullOrEmpty(roomInput.text)
         //    ? "Room" + Random.Range(0, 100)
         //    : roomInput.text;
-        PhotonNetwork.CreateRoom("Room Name", new RoomOptions { MaxPlayers = 3 });
+        PhotonNetwork.CreateRoom("Room Name", new RoomOptions { MaxPlayers = 4 });
     }
 
     public void JoinRandomRoom()
@@ -73,16 +112,31 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         PhotonNetwork.JoinRandomRoom();
     }
 
+    public override void OnCreatedRoom()
+    {
+        print("Create Room");
+
+    }
+
+    /// <summary>
+    /// 방에 들어온 경우 - 방을 생성해서 들어온 경우는 제외
+    /// </summary>
     public override void OnJoinedRoom()
     {
-        roomPanel.SetActive(true);
-        connectStateText.text = "In Room";
+        print("Join Room");
+        ActiveNetworkStateUI();
     }
 
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
-        photonView.RPC(nameof(ChatRPC), RpcTarget.All,
-            newPlayer.NickName + "가 입장했습니다");
+        print($"{newPlayer.NickName} entered room");
+        onPlayerEnteredRoom?.Invoke(newPlayer);
+    }
+
+    public override void OnPlayerLeftRoom(Player otherPlayer)
+    {
+        print($"{otherPlayer.NickName} left room");
+        onPlayerLeftRoom?.Invoke(otherPlayer);
     }
 
     //랜덤으로 들어갈 방이 없을 때
