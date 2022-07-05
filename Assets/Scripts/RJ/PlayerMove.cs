@@ -72,34 +72,10 @@ public class PlayerMove : MonoBehaviour
         {
             Instantiate(bullet[0], firePos.position, transform.rotation);
         }
-
-		//if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D))
-		//      {
-		//	if (Input.GetKeyDown(KeyCode.O))
-		//          {
-		//		GameObject bullet_1 = Instantiate(bullet[0]);
-		//		bullet_1.transform.position = firePos_Right.transform.position;
-		//	}
-		//	if (Input.GetKeyDown(KeyCode.P))
-		//	{
-		//		GameObject bullet_2 = Instantiate(bullet[1]);
-		//		bullet_2.transform.position = firePos_Right.transform.position;
-		//	}
-		//}
-		//if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A))
-		//{
-		//	if (Input.GetKeyDown(KeyCode.O))
-		//	{
-		//		GameObject bullet_1 = Instantiate(bullet[0]);
-		//		bullet_1.transform.position = firePos_Left.transform.position;
-		//	}
-		//	if (Input.GetKeyDown(KeyCode.P))
-		//	{
-		//		GameObject bullet_2 = Instantiate(bullet[1]);
-		//		bullet_2.transform.position = firePos_Left.transform.position;
-		//	}
-		//}
-
+		if (Input.GetKeyDown(KeyCode.P))
+		{
+			Instantiate(bullet[1], firePos.position, transform.rotation);
+		}
 	}
 
 	private void OnCollisionEnter(Collision collision)

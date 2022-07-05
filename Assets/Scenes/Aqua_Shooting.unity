@@ -726,6 +726,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 8922226120249521390, guid: a42e08d9ed4449f49a007b638fd47400, type: 3}
+      propertyPath: bullet.Array.data[1]
+      value: 
+      objectReference: {fileID: 4173457390907577683, guid: 43210893a8970f440ab5823f2fd8ee27, type: 3}
     - target: {fileID: 8922226120249521391, guid: a42e08d9ed4449f49a007b638fd47400, type: 3}
       propertyPath: m_RootOrder
       value: 3
