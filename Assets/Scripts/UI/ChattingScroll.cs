@@ -11,12 +11,21 @@ public class ChattingScroll : MonoBehaviour
     public ScrollRect chatScrollView;
     public TextMeshProUGUI chatText;
 
+    private RectTransform scrollRectTr;
+    private RectTransform chatTextTr;
+
     private float originHeight;
     private bool isChatting = false;
 
     private void OnEnable()
     {
         
+    }
+
+    private void Awake()
+    {
+        chatTextTr = chatText.GetComponent<RectTransform>();
+        scrollRectTr = chatScrollView.GetComponent<RectTransform>();
     }
 
     private void Start()
@@ -59,21 +68,21 @@ public class ChattingScroll : MonoBehaviour
         }
     }
 
+    public void ScrollUp()
+    {
+
+    }
+
+    public void ScrollDown()
+    {
+
+    }
+
     public void Chat(string message)
     {
         chatText.text += message + "\n";
-        //var chatText = Instantiate(chatTextPrefab);
-        //chatText.transform.SetParent(chatContent);
-        //// 채팅 오브젝트의 로컬 스케일이 변동되는 문제가 있어 localScale을 강제로 1로 변경
-        //chatText.transform.localScale = Vector3.one;
-        //chatText.GetComponent<Text>().text = message;
 
-        //var msg = chatText.GetComponent<RectTransform>();
+        // 스크롤 버튼 활성화 비활성화 결정
 
-        //var newHeight = Mathf.Max(originHeight, chatContent.childCount * msg.sizeDelta.y);
-        //var newRectSize = new Vector2(chatContent.sizeDelta.x, newHeight);
-        //chatContent.sizeDelta = newRectSize;
-        //var newPosY = Mathf.Max(0, newHeight - originHeight);
-        //chatContent.anchoredPosition = new Vector2(chatContent.anchoredPosition.x, newPosY);
     }
 }
