@@ -2,10 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class ChattingScroll : MonoBehaviour
 {
-    public InputField chatInputField;
+    public TMP_InputField chatInputField;
     public ScrollRect chatScrollView;
     public RectTransform chatContent;
     public GameObject chatTextPrefab;
