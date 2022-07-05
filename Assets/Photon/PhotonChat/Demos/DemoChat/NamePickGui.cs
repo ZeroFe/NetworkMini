@@ -33,7 +33,7 @@ namespace Photon.Chat.Demo
         }
 
 
-        // new UI will fire "EndEdit" event also when loosing focus. So check "enter" key and only then StartChat.
+        // new UI will fire "EndEdit" event also when loosing focus. So check "enter" key and only then StartConnect.
         public void EndEditOnEnter()
         {
             if (Input.GetKey(KeyCode.Return) || Input.GetKey(KeyCode.KeypadEnter))
