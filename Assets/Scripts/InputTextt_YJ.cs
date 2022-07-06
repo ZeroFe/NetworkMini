@@ -24,6 +24,7 @@ public class InputTextt_YJ : MonoBehaviour
     // 답지_파일 받아오기
     public FileStream answerFile;
     public string memoPath;
+    public string[] contents;
 
     // 답지_줄 받아오기
     public string memo;
@@ -35,6 +36,14 @@ public class InputTextt_YJ : MonoBehaviour
     private int firsttime = 18;
     private int roundtime = 10;
 
+    // 정답체크
+    public int correct;
+
+    // 등수체크용 정답갯수
+    public int correctNumber = 0;
+
+    // 이동
+    public float speed;
     // 싱글톤 만들기
     public static InputTextt_YJ instance;
     private void Awake()
@@ -77,7 +86,13 @@ public class InputTextt_YJ : MonoBehaviour
                 // 비교해주기
                 CompareAnswer();
 
-        }
+                // 결과 뭔디
+                IfAnswerGoUp();
+                IfWrongGoDown();
+
+
+
+             }
 
     }
 
@@ -88,7 +103,7 @@ public class InputTextt_YJ : MonoBehaviour
         memoPath += "/Text/QuestionStorage.txt";
 
         // contents에다가 전체 파일 가져와서 contents라는 변수에 저장하기
-        string[] contents = System.IO.File.ReadAllLines(memoPath);
+        contents = System.IO.File.ReadAllLines(memoPath);
 
         // contents에 무언가가 저장이 되었다면
         if (contents.Length > 0)
@@ -113,22 +128,53 @@ public class InputTextt_YJ : MonoBehaviour
     public void CompareAnswer()
     {
 
-        print("입력한 값 : "+ answer);
-        print("memo 값 : " + memo);
         // 정답이면 
         if (answer == memo)
         {
-            // 올려주기 
-            this.gameObject.transform.position += new Vector3(0, 1.0f, 0); 
+            // 정답이랍니다
+            correct = 1;
         }
 
         // 오답이면 
         else if (answer != memo )
         {
-            this.gameObject.transform.position += new Vector3(0, 0, 0);
-
+            // 오답이랍니다
+            correct = -1;
         }
 
     }
+    public void IfAnswerGoUp()
+    {
+        // 정답이면
+        if ( correct == 1 )
+        {
+            // 올려주기 
+            // this.gameObject.transform.position += Vector3.up;
+            this.gameObject.transform.position += Vector3.up * speed;
 
+
+            correctNumber += 1;
+
+
+
+        }
+
+        correct = 0;
+
+    }
+    public void IfWrongGoDown()
+    {
+        // 오답이면
+        if (correct == -1)
+        {
+            // 내려주기
+            this.gameObject.transform.position += Vector3.down * speed;
+
+
+        }
+
+        correct = 0;
+
+
+    }
 }
