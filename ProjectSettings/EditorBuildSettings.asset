@@ -5,13 +5,13 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Lobby.unity
     guid: efc4d8993bd091b4cb0134fd9df09dd1
   - enabled: 1
     path: Assets/Scenes/Aqua_Shooting.unity
     guid: 91cc11e7ed615e44f8690975410ef0ab
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Main_Scene_YJ.unity
     guid: cd35b0704494604498646e8336300a85
   m_configObjects: {}
