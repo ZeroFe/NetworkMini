@@ -21,5 +21,8 @@ public class GoUpSpawnManager : MonoBehaviour
         var player = PhotonNetwork.Instantiate("GoUp/Player", spawnPos.position, Quaternion.identity);
         player.transform.Translate(Vector3.right * playerNum * playerPosBonus); 
         print($"Spawn player - {playerNum}");
+
+        // 내 캐릭터를 GameSystem에 넣어주기
+        GoUpGameSystem.Instance.StartGame();
     }
 }
