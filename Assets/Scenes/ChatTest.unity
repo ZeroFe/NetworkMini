@@ -509,6 +509,26 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1082021184}
     m_Modifications:
+    - target: {fileID: 667193521872362527, guid: 04399464cdb786547b8af95316587686, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 799616bd05cb00d47b988f4c6d2830ad, type: 2}
+    - target: {fileID: 667193521872362527, guid: 04399464cdb786547b8af95316587686, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 5190128135867615903, guid: 799616bd05cb00d47b988f4c6d2830ad, type: 2}
+    - target: {fileID: 667193522622992028, guid: 04399464cdb786547b8af95316587686, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 667193522622992028, guid: 04399464cdb786547b8af95316587686, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 667193522622992028, guid: 04399464cdb786547b8af95316587686, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 667193522671395531, guid: 04399464cdb786547b8af95316587686, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -517,6 +537,10 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 667193522890384435, guid: 04399464cdb786547b8af95316587686, type: 3}
+      propertyPath: m_GlobalFontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 77c3f7d0b07a6c34e9bcb8ecfa909875, type: 2}
     - target: {fileID: 667193522983731620, guid: 04399464cdb786547b8af95316587686, type: 3}
       propertyPath: m_Name
       value: Panel_Chat
@@ -605,5 +629,13 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 667193523062667025, guid: 04399464cdb786547b8af95316587686, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 799616bd05cb00d47b988f4c6d2830ad, type: 2}
+    - target: {fileID: 667193523062667025, guid: 04399464cdb786547b8af95316587686, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 5190128135867615903, guid: 799616bd05cb00d47b988f4c6d2830ad, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 04399464cdb786547b8af95316587686, type: 3}
