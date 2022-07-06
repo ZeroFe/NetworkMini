@@ -1,13 +1,5 @@
 fileFormatVersion: 2
-<<<<<<<< HEAD:Assets/Scripts/Discription_YJ.cs.meta
-<<<<<<< HEAD
 guid: d99403497fbf145438c818cf69aed583
-=======
-guid: e9bdcf6344119c44cb27dd3a64b9a3f9
->>>>>>> origin/main
-========
-guid: e32fb9dc0efc038478980b9975d36a57
->>>>>>>> origin/main:Assets/Scripts/Network/NetworkManager.cs.meta
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
