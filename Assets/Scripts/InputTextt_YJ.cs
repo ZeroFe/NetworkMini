@@ -3,12 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System.IO;
+using TMPro;
+using Photon.Pun;
+using Photon.Realtime;
 
 
 // 이건 플레이어에 붙여야겠다
 
 
-public class InputTextt_YJ : MonoBehaviour
+public class InputTextt_YJ : MonoBehaviourPun
 {
     //test Time
     private float time;
@@ -16,9 +19,10 @@ public class InputTextt_YJ : MonoBehaviour
     // 자식오브젝트의 텍스트 
     private Text childTextForNull;
 
-    
+
     // 플레이어의 입력 받아오기 
-    public InputField answerInput;
+    public ChattingScroll chattingScroll;
+
     public string answer = null;
 
     // 답지_파일 받아오기
@@ -52,7 +56,26 @@ public class InputTextt_YJ : MonoBehaviour
     }
 
     // Start is called before the first frame update
-    IEnumerator Start()
+    void Start()
+    {
+        ReadMemo();
+
+        // 초기 채팅창 활성화
+
+    }
+
+    public void StartGame()
+    {
+        photonView.RPC(nameof(StartGameRPC), RpcTarget.All);
+    }
+
+    [PunRPC]
+    public void StartGameRPC()
+    {
+        StartCoroutine(IEStartGame());
+    }
+
+    IEnumerator IEStartGame()
     {
         // 14초 있다가 시작
         yield return new WaitForSeconds(firsttime);
@@ -65,84 +88,94 @@ public class InputTextt_YJ : MonoBehaviour
 
 
         }
-
     }
 
 
     // Update is called once per frame
     void Update()
     {
-        time += Time.deltaTime;
-        print(time);
+        //time += Time.deltaTime;
+        //print(time);
         
-            // 답가져와서
-            GetMeMo();
-            // 입력값 받아서 
-            GetAnswer();
 
-            // 답변을 입력한 상태고 && 엔터키를 누른다면
-            if ((answer.Length > 0) && (Input.GetKeyDown(KeyCode.Return)))
-            {
-                // 비교해주기
-                CompareAnswer();
+        // 답변을 입력한 상태고 && 엔터키를 누른다면
+        if ((chattingScroll.chatInputField.text.Length > 0) && (Input.GetKeyDown(KeyCode.Return)))
+        {
+            // 비교해주기
+            CompareAnswer();
 
-                // 결과 뭔디
-                IfAnswerGoUp();
-                IfWrongGoDown();
+            // 비교한 결과에 따라 결과 적용하기
 
 
+            // 채팅 출력
+            Chat(chattingScroll.chatInputField.text);
 
-             }
+
+            // 결과 뭔디
+            IfAnswerGoUp();
+            IfWrongGoDown();
+
+
+
+        }
 
     }
 
-    public void GetMeMo()
-    { 
+
+    public void Chat(string message)
+    {
+        photonView.RPC(nameof(Chat_RPC), RpcTarget.All,
+            PhotonNetwork.LocalPlayer.NickName + " : " + message);
+    }
+
+    [PunRPC]
+    private void Chat_RPC(string message)
+    {
+        chattingScroll.Chat(message);
+    }
+
+    // 파일 받아서 읽어오기
+    public void ReadMemo()
+    {
         // 파일 받아오기
         memoPath = Application.dataPath;
         memoPath += "/Text/QuestionStorage.txt";
 
         // contents에다가 전체 파일 가져와서 contents라는 변수에 저장하기
         contents = System.IO.File.ReadAllLines(memoPath);
-
-        // contents에 무언가가 저장이 되었다면
-        if (contents.Length > 0)
-        {
-            // 지금 라운드와 같은 순서로 읽어주기
-            memo = contents[round];
-
-        }
-
-
     }
-    public void GetAnswer()
+
+    // 컨텐츠 안에 있는 메모를 가져와서 읽기
+    public string GetMeMo()
+    {
+        Debug.Assert(contents.Length > 0, "Error : contents is empty");
+        return memo = contents[round];
+    }
+
+
+    public string GetAnswer()
     {
         // memo랑 입력받은거랑 비교하기
         // 입력한거는 answer 
         // 답지는 memo
-        answer = answerInput.GetComponent<InputField>().text;
-
+        //answer = answerInput.GetComponent<InputField>().text;
+        return answer = chattingScroll.chatInputField.text;
 
 
     }
+
     public void CompareAnswer()
     {
 
-        // 정답이면 
-        if (answer == memo)
-        {
-            // 정답이랍니다
-            correct = 1;
-        }
+        // 답가져와서
+        memo = GetMeMo();
+        // 입력값 받아서 
+        answer = GetAnswer();
 
-        // 오답이면 
-        else if (answer != memo )
-        {
-            // 오답이랍니다
-            correct = -1;
-        }
-
+        // 정답이면 1, 오답이면 -1
+        correct = answer == memo ? 1 : -1; 
     }
+
     public void IfAnswerGoUp()
     {
         // 정답이면
