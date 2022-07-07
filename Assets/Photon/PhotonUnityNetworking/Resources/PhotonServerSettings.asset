@@ -44,6 +44,8 @@ MonoBehaviour:
   - SetPrevGameRPC
   - Chat_RPC
   - StartGameRPC
+  - JudgeAnswerRPC
+  - SpawnRPC
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1
