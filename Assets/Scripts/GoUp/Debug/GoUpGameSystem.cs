@@ -25,13 +25,13 @@ public class GoUpGameSystem : MonoBehaviourPun
     public string[] guides;
     public float guideWaitTime = 3.0f;
 
-    // 답지_파일 받아오기
-    private readonly string MEMO_PATH = "/Text/QuestionStorage.txt";
-    private string[] memoLines;
-
     [Header("Round")]
     public int MaxRound = 9;
     public int Round { get; private set; } = 0;
+
+    // 답지_파일 받아오기
+    private readonly string MEMO_PATH = "/Text/QuestionStorage.txt";
+    public string[] memoLines;
 
     // 문제번호 친구들
     private readonly string NUMBER_TEXT = "문제";
@@ -43,8 +43,8 @@ public class GoUpGameSystem : MonoBehaviourPun
     private int currentRank = 0;
 
     // 내 캐릭터 및 상대 캐릭터들 저장
-    public GoUpPlayer myPlayer;
-    public List<GoUpPlayer> players = new List<GoUpPlayer>();
+    public GoUpPlayer[] players;
+    //public HashSet<GameObject> players;
 
     private void Awake()
     {
@@ -53,7 +53,8 @@ public class GoUpGameSystem : MonoBehaviourPun
 
     private void Start()
     {
-        ReadAnswerFile();
+        // 빌드 했을 때 제대로 안 돌아가서 앱에서 미리 설정하는 쪽으로 변경
+        //ReadAnswerFile();
     }
 
     /// <summary>
@@ -75,6 +76,7 @@ public class GoUpGameSystem : MonoBehaviourPun
     [PunRPC]
     private void StartGameRPC()
     {
+        print("Start Game");
         StartCoroutine(IEStartGuide());
     }
 
@@ -184,23 +186,28 @@ public class GoUpGameSystem : MonoBehaviourPun
     public void JudgeAnswer(bool correct)
     {
         // 정답이면 내 캐릭터 올리기
-        if (correct)
-        {
-            print("Correct");
-            // 올려주기 
-            //myPlayer.GoUp();
-        }
-        // 아니면 내 캐릭터 내리기
-        else
-        {
-            print("Fail");
-            //myPlayer.GoDown();
-        }
+        photonView.RPC(nameof(JudgeAnswerRPC), RpcTarget.AllBuffered, 
+            correct, PhotonNetwork.LocalPlayer.ActorNumber);
 
         // 정답을 받았으면 맞는지 틀린지와 관계없이 더 이상 정답을 받지 못하게 막음
         IsAnswerable = false;
     }
 
-    // RPC - 정답 처리 : 
-    // RPC - 실패 처리 : 
+    // RPC - 정답 판정
+    [PunRPC]
+    public void JudgeAnswerRPC(bool correct, int actorNumber)
+    {
+        if (correct)
+        {
+            print($"Player{actorNumber} has correct answer - rank {currentRank + 1}");
+            players[actorNumber - 1].GoUp(currentRank++);
+        }
+        else
+        {
+            print($"Player{actorNumber} has incorrect answer");
+            players[actorNumber - 1].GoDown();
+        }
+    }
+
+
 }

@@ -7,8 +7,11 @@ using Random = UnityEngine.Random;
 
 public class DebugConnect_GoUp : MonoBehaviourPunCallbacks
 {
+    private readonly string version = "0.1";
+
     void Start()
     {
+        PhotonNetwork.GameVersion = version;
         PhotonNetwork.ConnectUsingSettings();
     }
 
@@ -26,7 +29,7 @@ public class DebugConnect_GoUp : MonoBehaviourPunCallbacks
             IsVisible = true,
             IsOpen = true
         };
-        PhotonNetwork.JoinOrCreateRoom("Test01", option, TypedLobby.Default);
+        PhotonNetwork.JoinOrCreateRoom("Debug Go Up", option, TypedLobby.Default);
     }
 
     public override void OnJoinedRoom()
@@ -34,20 +37,24 @@ public class DebugConnect_GoUp : MonoBehaviourPunCallbacks
         // 플레이어 생성
         PhotonNetwork.LocalPlayer.NickName = "Player" + PhotonNetwork.LocalPlayer.ActorNumber;
         GoUpSpawnManager.Instance.Spawn();
+        //print($"Player Count - {PhotonNetwork.CurrentRoom.PlayerCount}");
+        //GoUpGameSystem.Instance.StartGame();
     }
 
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
         // 디버그용
         // 방장이면 시작 명령
-        //if (PhotonNetwork.CurrentRoom.PlayerCount > 1 && PhotonNetwork.LocalPlayer.IsMasterClient)
+        if (PhotonNetwork.CurrentRoom.PlayerCount > 1 && PhotonNetwork.LocalPlayer.IsMasterClient)
         {
+            print($"Player Count - {PhotonNetwork.CurrentRoom.PlayerCount}");
             GoUpGameSystem.Instance.StartGame();
         }
     }
 
     public override void OnJoinRoomFailed(short returnCode, string message)
     {
+        print("Join Room Failed?");
         var option = new RoomOptions
         {
             MaxPlayers = 3,
@@ -55,5 +62,10 @@ public class DebugConnect_GoUp : MonoBehaviourPunCallbacks
             IsOpen = true
         };
         PhotonNetwork.JoinOrCreateRoom("Test02", option, TypedLobby.Default);
+    }
+
+    public override void OnPlayerLeftRoom(Player otherPlayer)
+    {
+        print($"Player {otherPlayer.ActorNumber} left the room");
     }
 }

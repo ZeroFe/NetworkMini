@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 using static UnityEngine.Mathf;
 using Photon.Pun;
 using Photon.Realtime;
@@ -10,6 +11,9 @@ public class PlayerMove : MonoBehaviourPun, IPunObservable
 {
 	public float rotateSpeed = 5f;
 	public float speed = 5f;
+
+	public Transform rocket;
+
 	
 	[Header("Fire")]
 	public GameObject[] bullet = new GameObject[2];
@@ -21,6 +25,14 @@ public class PlayerMove : MonoBehaviourPun, IPunObservable
 	public Slider hpBar;
 	int hp;
 	public int maxHP = 4;
+
+	[Header("Init Data")]
+	[SerializeField] private TextMeshProUGUI nameText;
+	// 초기 정보 데이터
+	public int actorNumber;
+	public Color[] playerColors = new Color[4];
+	public MeshRenderer[] rocketBodies;
+	public Material rocketMaterial;
 
 	// For Photon Network
 	private Vector3 setPos;
@@ -47,13 +59,28 @@ public class PlayerMove : MonoBehaviourPun, IPunObservable
 	{
 		hpBar.maxValue = maxHP;
 		HP = maxHP;
+
+		ApplyInitData();
 	}
+
+	void ApplyInitData()
+    {
+		actorNumber = (int)photonView.InstantiationData[0];
+		nameText.text = (string)photonView.InstantiationData[1];
+
+		var playerRocketMat = new Material(rocketMaterial);
+		playerRocketMat.SetColor("_Color", playerColors[actorNumber - 1]);
+        foreach (var body in rocketBodies)
+        {
+			body.material = playerRocketMat;
+        }
+    }
 
 	void Update()
 	{
 		PosInterpolation();
-		Area();
-		Shoot();
+        Area();
+        Shoot();
 	}
 
     private void FixedUpdate()
@@ -70,7 +97,7 @@ public class PlayerMove : MonoBehaviourPun, IPunObservable
 
             if (h != 0)
             {
-				transform.rotation = Quaternion.Euler(0, h > 0 ? 0 : 180, 0);
+				rocket.rotation = Quaternion.Euler(0, h > 0 ? 0 : 180, 0);
 			}
 
 			Vector3 dir = new Vector3(h, v, 0);
@@ -79,7 +106,7 @@ public class PlayerMove : MonoBehaviourPun, IPunObservable
 		}
 		else //내 클라이언의 내객체 제어가 아닌겨우 - >Remote (상대방 객체) 
 		{
-			transform.rotation = setRot;
+			rocket.rotation = setRot;
 		}
 	}
 
@@ -97,8 +124,8 @@ public class PlayerMove : MonoBehaviourPun, IPunObservable
 		var curPos = transform.position;
 
         //x,y범위를 지정해서범위에서만 움직이고 싶다
-        curPos.x = Clamp(curPos.x, -16, 16);
-		curPos.y = Clamp(curPos.y, -7, 6);
+        curPos.x = Clamp(curPos.x, -27, 27.66f);
+		curPos.y = Clamp(curPos.y, -13.59f, 14.78f);
 
 		transform.position = curPos;
 	}
@@ -110,7 +137,7 @@ public class PlayerMove : MonoBehaviourPun, IPunObservable
 
 	private void Shoot()
 	{
-		if (Input.GetKeyDown(KeyCode.Space) && photonView.IsMine)
+		if (Input.GetKeyDown(KeyCode.Space) && photonView.IsMine && AquaTimer.Instance.IsShootable)
 		{
 			// 직접 발사처리 하지 않고 방장에게 맡김
 			photonView.RPC(nameof(Fire), RpcTarget.AllBuffered, null);
@@ -120,7 +147,9 @@ public class PlayerMove : MonoBehaviourPun, IPunObservable
 	[PunRPC]
 	void Fire()
     {
-		Instantiate(bullet[currWeapon], firePos.position, transform.rotation);
+		var missile = Instantiate(bullet[currWeapon], firePos.position, rocket.rotation);
+		var b = missile.GetComponentInChildren<Bullet>();
+		b.missile.material = b.missileMats[actorNumber - 1];
 	}
 
 	private void OnCollisionEnter(Collision collision)
@@ -140,10 +169,12 @@ public class PlayerMove : MonoBehaviourPun, IPunObservable
 		{
 			//충돌 레이어를 유령으로 만들고
 			this.gameObject.layer = 10;
-			this.transform.position += new Vector3(0, 0, 1.5f);
+			this.transform.position += new Vector3(0, 0, 2f);
 			this.gameObject.GetComponent<BoxCollider>().enabled = false;
 			//컬러를 바꾸고싶다
-			this.gameObject.GetComponent<Renderer>().material.color = new Color(1, 1, 1, 0.4f);
+			var playerRocketMat = new Material(rocketMaterial);
+			Color die = new Color(1, 1, 1, 0.4f);
+			playerRocketMat.SetColor("_Color", die);
 		}
     }
 
@@ -155,7 +186,7 @@ public class PlayerMove : MonoBehaviourPun, IPunObservable
 		{//상대방이 보는 내객체(Remote) 에 값을 주어야 겠지 
 		 //보내는 함수 - stream. sendNext
 			stream.SendNext(this.transform.position);
-			stream.SendNext(this.transform.rotation);
+			stream.SendNext(this.rocket.rotation);
 		}
 		if (stream.IsReading)//상대방이 보는 내객체(Remote) 일때 photonview-mine false 일때  
 		{
