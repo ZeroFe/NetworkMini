@@ -15,6 +15,9 @@ public class RoomGUI : MonoBehaviourPun
     [Header("Player")]
     public RoomPlayerInfoUI[] roomPlayers;
 
+    [Header("Chatting")] 
+    public ChattingScroll chattingScroll;
+
     [Header("Game Explain")] 
     public Image gameScreenShot;
     public TextMeshProUGUI gameName;
@@ -49,6 +52,45 @@ public class RoomGUI : MonoBehaviourPun
     {
         networkManager.onPlayerEnteredRoom -= UpdateEnteredPlayerInfo;
         networkManager.onPlayerLeftRoom -= UpdateLeftPlayerInfo;
+    }
+
+    private void Update()
+    {
+        // 처음 엔터를 누르면 Input Field 활성화
+        // Input Field 활성화된 상태에서 엔터를 누르면 
+        if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
+        {
+            // 채팅 처리
+            Chat(chattingScroll.chatInputField.text);
+
+            // 초기엔 채팅을 치는 상태가 아니다
+            //if (!isChatting)
+            //{
+            //    // 채팅 활성화
+            //    chatInputField.Select();
+            //}
+            //// InputField에 채팅을 치는 상태면 엔터 누르면 입력을 마친다
+            //else
+            //{
+            //    Chat("Player : " + chatInputField.text);
+            //    chatInputField.Select();
+            //}
+
+            //// 반대로 전환
+            //isChatting = !isChatting;
+        }
+    }
+
+    public void Chat(string message)
+    {
+        photonView.RPC(nameof(Chat_RPC), RpcTarget.All, 
+            PhotonNetwork.LocalPlayer.NickName + " : " + message);
+    }
+
+    [PunRPC]
+    private void Chat_RPC(string message)
+    {
+        chattingScroll.Chat(message);
     }
 
     // 룸 안에 있는 플레이어 정보 설정
@@ -93,6 +135,7 @@ public class RoomGUI : MonoBehaviourPun
         roomPlayers[otherPlayer.ActorNumber - 1].DisableUI();
     }
 
+    #region Game Select
     public void SetPrevGame()
     {
         photonView.RPC(nameof(SetPrevGameRPC), RpcTarget.All);
@@ -129,7 +172,9 @@ public class RoomGUI : MonoBehaviourPun
         gameName.text = gameData.gameName;
         gameExplain.text = gameData.gameExplain;
     }
+    #endregion
 
+    #region For Game Start, Leave Button
     public void StartGame()
     {
         var gameNumber = gameDataIndex != 0 ? gameDataIndex : UnityEngine.Random.Range(1, gameDatas.Length);
@@ -141,4 +186,5 @@ public class RoomGUI : MonoBehaviourPun
     {
         networkManager.LeaveRoom();
     }
+    #endregion
 }

@@ -961,6 +961,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Panel_Room
       objectReference: {fileID: 0}
+    - target: {fileID: 8682113625043904353, guid: fae3e954f7211b0488a6477cbba10007, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8682113625043904354, guid: fae3e954f7211b0488a6477cbba10007, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -1044,6 +1048,34 @@ PrefabInstance:
     - target: {fileID: 8682113625043904354, guid: fae3e954f7211b0488a6477cbba10007, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8840550518949726983, guid: fae3e954f7211b0488a6477cbba10007, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8840550518949726983, guid: fae3e954f7211b0488a6477cbba10007, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8840550518997870416, guid: fae3e954f7211b0488a6477cbba10007, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8840550518997870416, guid: fae3e954f7211b0488a6477cbba10007, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8840550518997870416, guid: fae3e954f7211b0488a6477cbba10007, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: -45
+      objectReference: {fileID: 0}
+    - target: {fileID: 8840550519173998697, guid: fae3e954f7211b0488a6477cbba10007, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 936
+      objectReference: {fileID: 0}
+    - target: {fileID: 8840550519173998697, guid: fae3e954f7211b0488a6477cbba10007, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 280
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fae3e954f7211b0488a6477cbba10007, type: 3}

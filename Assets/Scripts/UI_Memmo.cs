@@ -56,8 +56,8 @@ public class UI_Memmo : MonoBehaviour
 
 
         //test
-        print("roundGot : " + roundGot);
-        print("memoText : " + memoText.text);
+        //print("roundGot : " + roundGot);
+        //print("memoText : " + memoText.text);
 
     }
 
