@@ -97,8 +97,8 @@ public class PlayerMove : MonoBehaviourPun, IPunObservable
 		var curPos = transform.position;
 
         //x,y범위를 지정해서범위에서만 움직이고 싶다
-        curPos.x = Clamp(curPos.x, -16, 16);
-		curPos.y = Clamp(curPos.y, -7, 6);
+        curPos.x = Clamp(curPos.x, -27, 27.66f);
+		curPos.y = Clamp(curPos.y, -13.59f, 14.78f);
 
 		transform.position = curPos;
 	}
