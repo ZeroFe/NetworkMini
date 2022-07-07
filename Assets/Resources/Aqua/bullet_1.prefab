@@ -113,6 +113,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 10
+  missile: {fileID: 1346325191750950825}
+  missileMats:
+  - {fileID: 2100000, guid: e941d0d6425697b499256f89933a0df2, type: 2}
+  - {fileID: 2100000, guid: effb278466e36474989bd577f63840b1, type: 2}
+  - {fileID: 2100000, guid: dadefef0edf68504b971d5e8b275586d, type: 2}
+  - {fileID: 2100000, guid: 6c121e11c1fbe994a928335538344c18, type: 2}
   expFactory: {fileID: 1000010445015216, guid: e668c8dcb83f94e47a6ec1eeaf678b4c, type: 3}
 --- !u!54 &1398354666565535492
 Rigidbody:
@@ -251,10 +257,19 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 23461226391260944, guid: b65939835b3280248b7b52fd8e7ba238, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: dadefef0edf68504b971d5e8b275586d, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b65939835b3280248b7b52fd8e7ba238, type: 3}
 --- !u!4 &1363872109108800257 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4837891981999032, guid: b65939835b3280248b7b52fd8e7ba238, type: 3}
+  m_PrefabInstance: {fileID: 1368041489429582009}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &1346325191750950825 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 23461226391260944, guid: b65939835b3280248b7b52fd8e7ba238, type: 3}
   m_PrefabInstance: {fileID: 1368041489429582009}
   m_PrefabAsset: {fileID: 0}

@@ -31,6 +31,7 @@ public class DebugConnect : MonoBehaviourPunCallbacks
 
     public override void OnJoinedRoom()
     {
+        PhotonNetwork.LocalPlayer.NickName = $"Player {PhotonNetwork.LocalPlayer.ActorNumber}";
         AquaSpawnManager.Instance.Spawn();
     }
 
