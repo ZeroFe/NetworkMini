@@ -426,13 +426,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   titleImage: {fileID: 1475765905}
-  titleShowTime: 4
+  titleShowTime: 1
   readyObjects: {fileID: 1477661460}
   readyTimeText: {fileID: 879581281}
-  readyTime: 10
+  readyTime: 3
   Start_Image: {fileID: 1445550963}
   minimapImage: {fileID: 1705339805}
   timerImage: {fileID: 1994096600}
+  totalTime: 5
   timeSlider: {fileID: 1403364632}
 --- !u!4 &644565343
 Transform:

@@ -10,6 +10,7 @@ public class GoUpChatSystem : MonoBehaviourPun
 {
     // 플레이어의 입력 받아오기 
     public ChattingScroll chattingScroll;
+    public GoUpPlayer[] players;
 
     void Start()
     {
@@ -19,8 +20,14 @@ public class GoUpChatSystem : MonoBehaviourPun
     void Update()
     {
         // 채팅 창에 무언가 적었고 엔터키를 누른다면
-        if ((chattingScroll.chatInputField.text.Length > 0) && (Input.GetKeyDown(KeyCode.Return)))
+        if (Input.GetKeyDown(KeyCode.Return))
         {
+            // 문장이 비어있는 경우는 무시
+            if (chattingScroll.chatInputField.text.Length == 0)
+            {
+                return;
+            }
+
             // 답을 적을 수 있는 상태이고 이번 라운드에 처음 답하는거면 답 비교하기
             if (GoUpGameSystem.Instance.IsAnswerable)
             {
@@ -28,6 +35,8 @@ public class GoUpChatSystem : MonoBehaviourPun
                 GoUpGameSystem.Instance.JudgeAnswer(IsCorrectAnswer());
             }
 
+            // 플레이어 채팅 띄우기
+            PlayerChat(chattingScroll.chatInputField.text);
             // 채팅 출력 : 채팅은 정답과 상관없이 출력해야한다
             Chat(chattingScroll.chatInputField.text);
         }
@@ -43,6 +52,19 @@ public class GoUpChatSystem : MonoBehaviourPun
     private void Chat_RPC(string message)
     {
         chattingScroll.Chat(message);
+    }
+
+    public void PlayerChat(string message)
+    {
+        photonView.RPC(nameof(PlayerChatRPC), RpcTarget.All,
+            PhotonNetwork.LocalPlayer.ActorNumber - 1,
+            message);
+    }
+
+    [PunRPC]
+    public void PlayerChatRPC(int playerNum, string message)
+    {
+        players[playerNum].ShowChat(message);
     }
 
     private bool IsCorrectAnswer()

@@ -21,6 +21,7 @@ public class AquaSpawnManager : MonoBehaviour
 
     void Start()
     {
+        //Spawn();
     }
 
     public void Spawn()

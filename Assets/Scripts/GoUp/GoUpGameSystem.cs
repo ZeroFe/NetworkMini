@@ -25,13 +25,19 @@ public class GoUpGameSystem : MonoBehaviourPun
     public string[] guides;
     public float guideWaitTime = 3.0f;
 
+    [Header("Memo")]
+    // 답지_파일 받아오기
+    private readonly string MEMO_PATH = "/Text/QuestionStorage.txt";
+    public string[] memoLines;
+    public float roundNumShowTime = 2.0f;
+    public float memoShowTime = 5.0f;
+    public float roundWaitTime = 3.0f;
+
     [Header("Round")]
     public int MaxRound = 9;
     public int Round { get; private set; } = 0;
 
-    // 답지_파일 받아오기
-    private readonly string MEMO_PATH = "/Text/QuestionStorage.txt";
-    public string[] memoLines;
+    public GoUpResultUI resultUI;
 
     // 문제번호 친구들
     private readonly string NUMBER_TEXT = "문제";
@@ -55,6 +61,8 @@ public class GoUpGameSystem : MonoBehaviourPun
     {
         // 빌드 했을 때 제대로 안 돌아가서 앱에서 미리 설정하는 쪽으로 변경
         //ReadAnswerFile();
+
+        StartGame();
     }
 
     /// <summary>
@@ -113,17 +121,24 @@ public class GoUpGameSystem : MonoBehaviourPun
             // 번호 켜주기
             ShowNumber();
             // 2초 뒤에 바꾸고
-            yield return new WaitForSeconds(2);
+            yield return new WaitForSeconds(roundNumShowTime);
 
             ShowMemo();
             // 5초 뒤에 꺼주고
-            yield return new WaitForSeconds(5);
+            yield return new WaitForSeconds(memoShowTime);
 
             TurnOffMemo();
             // 3초뒤에 
-            yield return new WaitForSeconds(3);
+            yield return new WaitForSeconds(roundWaitTime);
 
             // 다음 라운드 진행
+            foreach (var goUpPlayer in players)
+            {
+                if (goUpPlayer.gameObject.activeSelf)
+                {
+                    goUpPlayer.HideRank();
+                }
+            }
         }
 
         // 결과 창 보여주기
@@ -155,13 +170,10 @@ public class GoUpGameSystem : MonoBehaviourPun
 
     private void TurnOffMemo()
     {
-        IsAnswerable = false;
-
         // 메모가 꺼졌으니 더 이상 정답을 적을 수 없다
         // 만약 정답을 적지 않은 상태라면 틀렸다고 판정해야 한다
         if (IsAnswerable)
         {
-            IsAnswerable = false;
             JudgeAnswer(false);
         }
 
@@ -172,8 +184,18 @@ public class GoUpGameSystem : MonoBehaviourPun
 
     private void ShowResult()
     {
-        // 끝났을 때 결과창 보여주기
         print("End");
+
+        // 끝났을 때 결과창 보여주기
+        resultUI.gameObject.SetActive(true);
+
+
+        Invoke(nameof(ReturnToRoom), 5.0f);
+    }
+
+    private void ReturnToRoom()
+    {
+        PhotonNetwork.LoadLevel("Lobby");
     }
 
     public string GetMemo()

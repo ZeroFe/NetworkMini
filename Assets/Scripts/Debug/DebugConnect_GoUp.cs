@@ -45,7 +45,7 @@ public class DebugConnect_GoUp : MonoBehaviourPunCallbacks
     {
         // 디버그용
         // 방장이면 시작 명령
-        if (PhotonNetwork.CurrentRoom.PlayerCount > 1 && PhotonNetwork.LocalPlayer.IsMasterClient)
+        if (PhotonNetwork.CurrentRoom.PlayerCount > 2 && PhotonNetwork.LocalPlayer.IsMasterClient)
         {
             print($"Player Count - {PhotonNetwork.CurrentRoom.PlayerCount}");
             GoUpGameSystem.Instance.StartGame();

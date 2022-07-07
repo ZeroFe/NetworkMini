@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,6 +15,11 @@ public class GoUpSpawnManager : MonoBehaviourPun
     private void Awake()
     {
         Instance = this;
+    }
+
+    private void Start()
+    {
+        Spawn();
     }
 
     public void Spawn()

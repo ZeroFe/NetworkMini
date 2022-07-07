@@ -2,8 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
+using Photon.Pun;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class AquaTimer : MonoBehaviour
 {
@@ -26,7 +27,7 @@ public class AquaTimer : MonoBehaviour
     public bool IsShootable { get; private set; } = false;
 
     float time;
-    float totalTime;
+    public float totalTime = 70;
     public Image timeSlider;
 
     WaitForSeconds ws = new WaitForSeconds(0.1f);
@@ -39,8 +40,6 @@ public class AquaTimer : MonoBehaviour
     // Start is called before the first frame update
     IEnumerator Start()
     {
-        totalTime = 70;
-
         yield return IEShowTitle();
         yield return IEReady();
 
@@ -85,9 +84,6 @@ public class AquaTimer : MonoBehaviour
     
     void GameOver()
     {
-        if (time <= 0)
-        {
-            SceneManager.LoadScene("Lobby");
-        }
+        PhotonNetwork.LoadLevel("Lobby");
     }
 }
