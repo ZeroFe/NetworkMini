@@ -847,6 +847,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Panel_Login
       objectReference: {fileID: 0}
+    - target: {fileID: 5991227457579765322, guid: 9509e00969d1fbf4ca64d336f9fa108e, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5991227457982616058, guid: 9509e00969d1fbf4ca64d336f9fa108e, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9509e00969d1fbf4ca64d336f9fa108e, type: 3}
 --- !u!1001 &6139201589003523568
@@ -856,9 +864,25 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1185487718}
     m_Modifications:
+    - target: {fileID: 6139201587127400228, guid: da7776163845ca04786a1072a2733a91, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0.00010215408
+      objectReference: {fileID: 0}
+    - target: {fileID: 6139201588040991740, guid: da7776163845ca04786a1072a2733a91, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6139201588040991740, guid: da7776163845ca04786a1072a2733a91, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0.9996143
+      objectReference: {fileID: 0}
     - target: {fileID: 6139201588283661875, guid: da7776163845ca04786a1072a2733a91, type: 3}
       propertyPath: m_Name
       value: Panel_Lobby
+      objectReference: {fileID: 0}
+    - target: {fileID: 6139201588283661875, guid: da7776163845ca04786a1072a2733a91, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6139201588283661876, guid: da7776163845ca04786a1072a2733a91, type: 3}
       propertyPath: m_Pivot.x
@@ -942,6 +966,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6139201588283661876, guid: da7776163845ca04786a1072a2733a91, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6139201588462829790, guid: da7776163845ca04786a1072a2733a91, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6139201588462829790, guid: da7776163845ca04786a1072a2733a91, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6139201588462829790, guid: da7776163845ca04786a1072a2733a91, type: 3}
+      propertyPath: m_SizeDelta.x
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
