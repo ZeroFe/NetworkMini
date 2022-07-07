@@ -7,6 +7,9 @@ public class Bullet : MonoBehaviour
     public float speed = 10;
     GameObject bullet;
 
+    public MeshRenderer missile;
+    public Material[] missileMats;
+
     // Start is called before the first frame update
     void Start()
     {
