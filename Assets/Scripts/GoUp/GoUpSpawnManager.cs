@@ -20,12 +20,14 @@ public class GoUpSpawnManager : MonoBehaviourPun
     {
         var playerNum = PhotonNetwork.LocalPlayer.ActorNumber - 1;
         print($"Spawn player - {playerNum}");
-        photonView.RPC(nameof(SpawnRPC), RpcTarget.AllBuffered, playerNum);
+        photonView.RPC(nameof(SpawnRPC), RpcTarget.AllBuffered, 
+            playerNum, PhotonNetwork.LocalPlayer.NickName);
     }
 
     [PunRPC]
-    private void SpawnRPC(int playerNum)
+    private void SpawnRPC(int playerNum, string playerName)
     {
         players[playerNum].gameObject.SetActive(true);
+        players[playerNum].GetComponent<GoUpPlayer>().nameText.text = playerName;
     }
 }
