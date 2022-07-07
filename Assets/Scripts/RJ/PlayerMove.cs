@@ -169,10 +169,12 @@ public class PlayerMove : MonoBehaviourPun, IPunObservable
 		{
 			//충돌 레이어를 유령으로 만들고
 			this.gameObject.layer = 10;
-			this.transform.position += new Vector3(0, 0, 1.5f);
+			this.transform.position += new Vector3(0, 0, 2f);
 			this.gameObject.GetComponent<BoxCollider>().enabled = false;
 			//컬러를 바꾸고싶다
-			this.gameObject.GetComponent<Renderer>().material.color = new Color(1, 1, 1, 0.4f);
+			var playerRocketMat = new Material(rocketMaterial);
+			Color die = new Color(1, 1, 1, 0.4f);
+			playerRocketMat.SetColor("_Color", die);
 		}
     }
 

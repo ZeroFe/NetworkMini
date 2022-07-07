@@ -112,14 +112,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5fa97ed793a3d234b9a44ace1b1a9196, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  expSFX: {fileID: 0}
+  expFactory: {fileID: 1000010445015216, guid: e668c8dcb83f94e47a6ec1eeaf678b4c, type: 3}
   speed: 10
+  bullet: {fileID: 4173457390907577683}
+  explosionSound: {fileID: 8300000, guid: d4aee29185389894b9cc0d8873904a49, type: 3}
   missile: {fileID: 1346325191750950825}
   missileMats:
   - {fileID: 2100000, guid: e941d0d6425697b499256f89933a0df2, type: 2}
   - {fileID: 2100000, guid: effb278466e36474989bd577f63840b1, type: 2}
   - {fileID: 2100000, guid: dadefef0edf68504b971d5e8b275586d, type: 2}
   - {fileID: 2100000, guid: 6c121e11c1fbe994a928335538344c18, type: 2}
-  expFactory: {fileID: 1000010445015216, guid: e668c8dcb83f94e47a6ec1eeaf678b4c, type: 3}
 --- !u!54 &1398354666565535492
 Rigidbody:
   m_ObjectHideFlags: 0

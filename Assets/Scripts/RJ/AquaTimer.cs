@@ -19,6 +19,7 @@ public class AquaTimer : MonoBehaviour
     public int readyTime = 10;
 
     [Header("Game")]
+    public GameObject Start_Image;
     public GameObject minimapImage;
     public GameObject timerImage;
 
@@ -42,6 +43,12 @@ public class AquaTimer : MonoBehaviour
 
         yield return IEShowTitle();
         yield return IEReady();
+
+        Start_Image.SetActive(true);
+
+        yield return new WaitForSeconds(2f);
+
+        Start_Image.SetActive(false);
 
         IsShootable = true;
         minimapImage.SetActive(true);

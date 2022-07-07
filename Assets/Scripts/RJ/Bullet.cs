@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
+    public GameObject expFactory; //폭발 공장
     public float speed = 10;
-    GameObject bullet;
+    public GameObject bullet;
+    public AudioClip explosionSound;
 
     public MeshRenderer missile;
     public Material[] missileMats;
@@ -13,7 +15,6 @@ public class Bullet : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        bullet = transform.parent.gameObject;
     }
 
     // Update is called once per frame
@@ -25,7 +26,6 @@ public class Bullet : MonoBehaviour
         Destroy(bullet, 6);
     }
 
-    public GameObject expFactory; //폭발 공장
     private void OnCollisionEnter(Collision collision)
     {
         if(collision.gameObject.tag == "Player")
@@ -33,6 +33,10 @@ public class Bullet : MonoBehaviour
             Destroy(bullet);
             GameObject exp = Instantiate(expFactory);
             exp.transform.position = transform.position;
+
+            SFXPlayer.Instance.PlaySpatialSound(transform.position, explosionSound);
+
+
             //3초 후에 폭발을 파괴하고싶다
             Destroy(exp, 3);
         }
