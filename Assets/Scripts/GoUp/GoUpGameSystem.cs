@@ -78,7 +78,10 @@ public class GoUpGameSystem : MonoBehaviourPun
     
     public void StartGame()
     {
-        photonView.RPC(nameof(StartGameRPC), RpcTarget.All);
+        if (PhotonNetwork.IsMasterClient)
+        {
+            photonView.RPC(nameof(StartGameRPC), RpcTarget.All);
+        }
     }
 
     [PunRPC]
@@ -195,7 +198,10 @@ public class GoUpGameSystem : MonoBehaviourPun
 
     private void ReturnToRoom()
     {
-        PhotonNetwork.LoadLevel("Lobby");
+        if (PhotonNetwork.IsMasterClient)
+        {
+            PhotonNetwork.LoadLevel("Lobby");
+        }
     }
 
     public string GetMemo()

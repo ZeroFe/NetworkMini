@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Aqua
   m_EditorClassIdentifier: 
   gameScene: {fileID: 102900000, guid: 91cc11e7ed615e44f8690975410ef0ab, type: 3}
-  gameScreenShot: {fileID: 21300000, guid: 436c5e63723127948af8857e903f658a, type: 3}
+  gameScreenShot: {fileID: 21300000, guid: 06fe9729f263c6c45a5baf166eb09896, type: 3}
   gameName: "\uC544\uCFE0\uC544"
   gameExplain: "\uC0C1\uD558\uC88C\uC6B0\uB85C \uC6C0\uC9C1\uC774\uBA74\uC11C \uC0C1\uB300\uC758
     \uACF5\uACA9\uC744 \uD53C\uD558\uACE0 \uCC98\uCE58\uD558\uC138\uC694"

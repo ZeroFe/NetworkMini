@@ -53,11 +53,16 @@ public class ChattingScroll : MonoBehaviour
     public void Chat(string message)
     {
         chatText.text += message + "\n";
-        chatInputField.text = "";
+        
 
         // 스크롤 버튼 활성화 비활성화 결정
 
         // 자동 활성화 비활성화 결정
 
+    }
+
+    public void Clear()
+    {
+        chatInputField.text = "";
     }
 }
