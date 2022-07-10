@@ -131,7 +131,7 @@ public class InputTextt_YJ : MonoBehaviourPun
     [PunRPC]
     private void Chat_RPC(string message)
     {
-        chattingScroll.Chat(message);
+        chattingScroll.PlayerChat();
     }
 
     // 파일 받아서 읽어오기

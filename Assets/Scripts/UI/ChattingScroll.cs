@@ -4,45 +4,46 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using Photon.Pun;
 
-public class ChattingScroll : MonoBehaviour
+public class ChattingScroll : MonoBehaviourPun
 {
+    [Header("UI Components")]
     public TMP_InputField chatInputField;
     public ScrollRect chatScrollView;
     public TextMeshProUGUI chatText;
+    public Button scrollUpButton;
+    public Button scrollDownButton;
 
-    public bool autoActive = true;
-    public bool Active { get; set; } = false;
+    public bool startActivated = true;
 
-    private void OnEnable()
+    public bool Activated
     {
-        
+        get => _activated;
+        set
+        {
+            if (_activated != value)
+            {
+                print($"Swap Activated - {value}");
+                _activated = value;
+                chatInputField.Select();
+            }
+        }
     }
+
+    private bool _activated = false;
+
+    public string CurrentInput => chatInputField.text;
 
     private void Start()
     {
         // 자동 활성화
-        chatInputField.ActivateInputField();
-    }
-
-    private void OnDisable()
-    {
-        
-    }
-
-    private void Update()
-    {
-        // 처음 엔터를 누르면 Input Field 활성화
-        // Input Field 활성화된 상태에서 엔터를 누르면 
-        //if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
-        //{
-        //}
-        //chatInputField.ActivateInputField();
+        Activated = startActivated;
     }
 
     public void ScrollUp()
     {
-
+        //chatText.
     }
 
     public void ScrollDown()
@@ -50,10 +51,16 @@ public class ChattingScroll : MonoBehaviour
 
     }
 
-    public void Chat(string message)
+    /// <summary>
+    /// 플레이어의 채팅 내용을 전체에게 보낸다
+    /// </summary>
+    public void PlayerChat()
     {
-        chatText.text += message + "\n";
-        
+        // 채팅 내용 전체한테 전파
+        photonView.RPC(nameof(ChatRPC), RpcTarget.All, PhotonNetwork.LocalPlayer.NickName + " : " + CurrentInput);
+
+        // 자기 채팅은 클리어
+        chatInputField.text = "";
 
         // 스크롤 버튼 활성화 비활성화 결정
 
@@ -61,8 +68,9 @@ public class ChattingScroll : MonoBehaviour
 
     }
 
-    public void Clear()
+    [PunRPC]
+    private void ChatRPC(string message)
     {
-        chatInputField.text = "";
+        chatText.text += message + "\n";
     }
 }

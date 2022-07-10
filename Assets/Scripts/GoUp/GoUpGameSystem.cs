@@ -237,5 +237,15 @@ public class GoUpGameSystem : MonoBehaviourPun
         }
     }
 
+    #region Debug
 
+    public void DebugStartGame()
+    {
+        if (PhotonNetwork.CurrentRoom.PlayerCount > 2 && PhotonNetwork.LocalPlayer.IsMasterClient)
+        {
+            print($"Player Count - {PhotonNetwork.CurrentRoom.PlayerCount}");
+            StartGame();
+        }
+    }
+    #endregion
 }

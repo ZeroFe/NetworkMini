@@ -61,7 +61,7 @@ public class RoomGUI : MonoBehaviourPun
         if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
         {
             // 채팅 처리
-            Chat(chattingScroll.chatInputField.text);
+            chattingScroll.PlayerChat();
 
             // 초기엔 채팅을 치는 상태가 아니다
             //if (!isChatting)
@@ -72,25 +72,13 @@ public class RoomGUI : MonoBehaviourPun
             //// InputField에 채팅을 치는 상태면 엔터 누르면 입력을 마친다
             //else
             //{
-            //    Chat("Player : " + chatInputField.text);
+            //    PlayerChat("Player : " + chatInputField.text);
             //    chatInputField.Select();
             //}
 
             //// 반대로 전환
             //isChatting = !isChatting;
         }
-    }
-
-    public void Chat(string message)
-    {
-        photonView.RPC(nameof(Chat_RPC), RpcTarget.All, 
-            PhotonNetwork.LocalPlayer.NickName + " : " + message);
-    }
-
-    [PunRPC]
-    private void Chat_RPC(string message)
-    {
-        chattingScroll.Chat(message);
     }
 
     // 룸 안에 있는 플레이어 정보 설정
@@ -120,9 +108,9 @@ public class RoomGUI : MonoBehaviourPun
     {
         bool isMasterClient = PhotonNetwork.LocalPlayer.IsMasterClient;
 
-        gameStartButton.interactable = isMasterClient ? true : false;
-        prevGameButton.interactable = isMasterClient ? true : false;
-        nextGameButton.interactable = isMasterClient ? true : false;
+        gameStartButton.interactable = isMasterClient;
+        prevGameButton.interactable = isMasterClient;
+        nextGameButton.interactable = isMasterClient;
     }
 
     private void UpdateEnteredPlayerInfo(Photon.Realtime.Player newPlayer)

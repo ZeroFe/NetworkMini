@@ -17,16 +17,16 @@ public class GoUpChatSystem : MonoBehaviourPun
         // 초기 채팅창 활성화
     }
 
+    /// <summary>
+    /// 서바이벌 올라타자의 입력은 여기서만 
+    /// </summary>
     void Update()
     {
-        // 채팅 창에 무언가 적었고 엔터키를 누른다면
-        if (Input.GetKeyDown(KeyCode.Return))
+        if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
         {
-            // 문장이 비어있는 경우는 무시
-            if (chattingScroll.chatInputField.text.Length == 0)
-            {
-                return;
-            }
+            // 채팅 켜져있는지 확인
+
+            // 채팅 비어있으면 그대로 끄기
 
             // 답을 적을 수 있는 상태이고 이번 라운드에 처음 답하는거면 답 비교하기
             if (GoUpGameSystem.Instance.IsAnswerable)
@@ -35,25 +35,16 @@ public class GoUpChatSystem : MonoBehaviourPun
                 GoUpGameSystem.Instance.JudgeAnswer(IsCorrectAnswer());
             }
 
-            // 플레이어 채팅 띄우기
-            PlayerChat(chattingScroll.chatInputField.text);
+            PlayerChat(chattingScroll.CurrentInput);
             // 채팅 출력 : 채팅은 정답과 상관없이 출력해야한다
-            Chat(chattingScroll.chatInputField.text);
+            chattingScroll.PlayerChat();
         }
     }
 
-    public void Chat(string message)
-    {
-        photonView.RPC(nameof(Chat_RPC), RpcTarget.All,
-            PhotonNetwork.LocalPlayer.NickName + " : " + message);
-    }
-
-    [PunRPC]
-    private void Chat_RPC(string message)
-    {
-        chattingScroll.Chat(message);
-    }
-
+    /// <summary>
+    /// 플레이어 채팅 띄우기
+    /// </summary>
+    /// <param name="message">적용할 내용</param>
     public void PlayerChat(string message)
     {
         photonView.RPC(nameof(PlayerChatRPC), RpcTarget.All,
@@ -62,7 +53,7 @@ public class GoUpChatSystem : MonoBehaviourPun
     }
 
     [PunRPC]
-    public void PlayerChatRPC(int playerNum, string message)
+    private void PlayerChatRPC(int playerNum, string message)
     {
         players[playerNum].ShowChat(message);
     }

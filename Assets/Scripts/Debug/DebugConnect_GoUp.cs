@@ -3,11 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
+using UnityEngine.Events;
 using Random = UnityEngine.Random;
 
 public class DebugConnect_GoUp : MonoBehaviourPunCallbacks
 {
     private readonly string version = "0.1";
+
+    public UnityEvent onJoinedRoom = new UnityEvent();
+    public UnityEvent onPlayerEnteredRoom = new UnityEvent();
 
     void Start()
     {
@@ -36,6 +40,7 @@ public class DebugConnect_GoUp : MonoBehaviourPunCallbacks
     {
         // 플레이어 생성
         PhotonNetwork.LocalPlayer.NickName = "Player" + PhotonNetwork.LocalPlayer.ActorNumber;
+        onJoinedRoom?.Invoke();
         GoUpSpawnManager.Instance.Spawn();
         //print($"Player Count - {PhotonNetwork.CurrentRoom.PlayerCount}");
         //GoUpGameSystem.Instance.StartGame();

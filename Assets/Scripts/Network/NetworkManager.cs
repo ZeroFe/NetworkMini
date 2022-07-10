@@ -159,7 +159,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     [PunRPC]
     void ChatRPC(string message)
     {
-        //chatManager.Chat(message);
+        //chatManager.PlayerChat(message);
     }
 
     public void LeaveRoom()

@@ -18,7 +18,7 @@ public class GoUpPlayer : MonoBehaviour
     public TextMeshProUGUI nameText;
     [SerializeField] private TextMeshProUGUI rankText;
 
-    [Header("Chat")]
+    [Header("PlayerChat")]
     [SerializeField] private GameObject chatTextArea;
     [SerializeField] private TextMeshProUGUI chatText;
     [SerializeField] private float chatShowTime = 5.0f;
